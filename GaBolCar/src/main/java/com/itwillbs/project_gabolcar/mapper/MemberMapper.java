@@ -53,5 +53,8 @@ public interface MemberMapper {
 	
 	// 1:1 문의게시판 로그인 상태 이름 넘겨주기
 	int getMemIdxByMemName(String mem_name);
+	
+	//회원 목록 조회(관리자모드)
+	List<MemberVO> selectMemList();
 
 }

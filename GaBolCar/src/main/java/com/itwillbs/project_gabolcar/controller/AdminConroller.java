@@ -32,6 +32,8 @@ import com.itwillbs.project_gabolcar.service.CarService;
 import com.itwillbs.project_gabolcar.service.MemberService;
 import com.itwillbs.project_gabolcar.service.ResService;
 import com.itwillbs.project_gabolcar.vo.CarVO;
+import com.itwillbs.project_gabolcar.vo.MemberVO;
+import com.itwillbs.project_gabolcar.vo.ResInfoVO;
 
 @Controller
 public class AdminConroller {
@@ -730,5 +732,47 @@ public class AdminConroller {
     	System.out.println(data.toString());
     	return data.toString();
     }
+    
+    // 예약리스트 이동
+  	@GetMapping("admResList")
+  	public String admResList() {
+  		
+  		return "html/admin/adm_res_list";
+  	}
+     
+  	// 예약리스트 조회
+  	@ResponseBody
+    @RequestMapping(value= "resList.ajax", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
+  	public String resSearch(@RequestParam Map<String, Object> map,  Model model) {
+		List<ResInfoVO> resList = res_service.getResList(map);
+		JSONArray jsonArray = new JSONArray(resList);
+	  	return jsonArray.toString();
+  	}
+  	
+  	// 회원리스트 이동
+    @GetMapping("admMemList")
+    public String admMemList() {
+    	return "html/admin/adm_mem_list";    	
+    }
+    	
+    // 회원리스트 조회
+    @ResponseBody
+	@RequestMapping(value= "memList.ajax", method = RequestMethod.GET, produces = "application/text; charset=UTF-8")
+	public String memSearch(@RequestParam Map<String, Object> map, Model model) {
+    	List<MemberVO> memList = mem_service.getMemList(map);
+    	JSONArray jsonArray = new JSONArray(memList);
+    	return jsonArray.toString();
+	}
+    
+	// "ResDetail" 서블릿 요청에 대한 글 상세정보 조회 요청
+//  	@GetMapping("ResDetail")
+//  	public String detail(@RequestParam int res_idx, Model model) {
+//  		ResInfoVO resDetail = res_service.getResDetail(res_idx);
+//  		
+//  		// 상세정보 조회 결과 저장
+//  		model.addAttribute("resDetail", resDetail);
+//  		return "html/admin/res_detail";
+//  	}
+      
     
 }
